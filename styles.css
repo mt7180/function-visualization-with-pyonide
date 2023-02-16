@@ -1,0 +1,88 @@
+body {
+    background-color: #fff;
+    color: #212529;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.0;
+    margin: 0;
+    text-align: left;
+    height:100%;
+}
+
+.jumbotron {
+    background-color: #A2D9CE;
+    color: #fff;
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.textbereich{
+    float: right;
+    background-color: #EAEDED;
+    /*padding: 0.5rem 2rem 1rem 2rem;*/
+    width: 80%;
+    height: 700px;
+}
+
+.textbereich2{
+    /*float: right;*/
+    background-color: #EAEDED;
+    padding: 0.5rem 2rem 1rem 2rem;
+
+}
+
+.clearfloat {
+    clear: both;
+    height: 0;
+    font-size: 1px;
+    line-height: 0px;
+}
+
+.stylish{
+    border-top: 0.7px solid white;
+    width:50%;
+    text-align:center;
+}
+.img_round_center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 50%;
+  margin-top:2rem;
+}
+footer{
+    float:left;
+}
+
+button{
+    background-color: #d9edff;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    vertical-align: middle;
+}
+
+input[type="text"] {
+    line-height: 2;
+    width: 25%;
+}
+
+h1{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+}
+
