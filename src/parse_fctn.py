@@ -1,5 +1,8 @@
 from sympy.parsing.sympy_parser import standard_transformations, convert_xor, implicit_multiplication, convert_equals_signs
 import sympy as smp
+import base64
+from io import BytesIO
+import matplotlib.pyplot as plt
 
 def parse_function(raw_input)-> None:
     inp, limits = extract_limit(raw_input)
@@ -55,11 +58,6 @@ def get_latex_functions(solution):
     vars = ','.join(map(lambda x: str(x), solution["free_symbols"]))
     return ("f(" + vars +')' + " = "
             + smp.latex(solution["smp_function"]))
-
-
-import base64
-from io import BytesIO
-import matplotlib.pyplot as plt
 
 
 
