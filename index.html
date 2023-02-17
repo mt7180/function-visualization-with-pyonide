@@ -63,14 +63,12 @@
                     //let pkg = pyodide.pyimport("src/parse_fctn")
                     pyodide.runPython(await (await fetch("src/parse_ftctn.py")).text());
                     
-                    pyodide.runPython(`
+                    const ls = pyodide.runPython(`parse_function("x^3+4")["latex_function"] `);
+                    //img_str = sol["figure"]
                     
-                    sol = parse_function("x^3+4")
-                    img_str = sol["figure"]
-                    `);
 
-                    document.getElementById("pyplotfigure").src=pyodide.globals.get("img_str");
-                    document.getElementById("latex_function").innerHTML =pyodide.globals.get("sol");
+                    //document.getElementById("pyplotfigure").src=pyodide.globals.get("img_str");
+                    document.getElementById("latex_function").innerHTML =ls;
                     
                 }
                 main(); 
