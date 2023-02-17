@@ -60,7 +60,7 @@
                     `)
 
                     // Importing fetched .py module
-                    let pkg = pyodide.pyimport("parse_fctn")
+                    let pkg = pyodide.pyimport("src/parse_fctn")
                     const ls = pkg.parse_function("x^3+4");
                     //pyodide.runPython(await (await fetch("src/parse_ftctn.py")).text());
                     
