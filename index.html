@@ -49,20 +49,33 @@
                         `)
                     );
                     
-                    await pyodide.loadPackage("matplotlib", "sympy", "base64");
+                   // await pyodide.loadPackage("matplotlib", "sympy", "base64");
+                    await pyodide.loadPackage("micropip");
+                   
+                    const micropip = pyodide.pyimport("micropip");
+                    await micropip.install('sympy', 'matplotlib');
+                    pyodide.runPython(`
+                    import sympy as smp
+                    import matplotlib
+                    matplotlib.use("module://matplotlib.backends.html5_canvas_backend")
+                    mport matplotlib.cm as cm
+                    from matplotlib import pyplot as plt
+                    
+                    `);
 
                     // Fetch parse_fctn.py and save it in browser memory
-                    await pyodide.runPythonAsync(`
-                        from pyodide.http import pyfetch
-                        response = await pyfetch("src/test.py")
-                        with open("test.py", "wb") as f:
-                            f.write(await response.bytes())
-                    `)
+                    // await pyodide.runPythonAsync(`
+                    //     from pyodide.http import pyfetch
+                    //     response = await pyfetch("src/test.py")
+                    //     with open("test.py", "wb") as f:
+                    //         f.write(await response.bytes())
+                    // `)
 
-
+                    pyodide.runPython(await (await fetch("src/test.py")).text());
                     // Importing fetched .py module
-                    let pkg = pyodide.pyimport("test")
-                    const ls = pkg.test();
+                    //let pkg = pyodide.pyimport("test")
+                    //const ls = pkg.test();
+                    const ls = pyodide.runPython(`second_func()`);
                     //const ls = pkg.parse_function("x^3+4");
                     //pyodide.runPython(await (await fetch("src/parse_ftctn.py")).text());
                     
