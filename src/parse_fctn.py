@@ -56,8 +56,8 @@ def extract_limit(expr: str)->str:
 
 def get_latex_functions(solution):
     vars = ','.join(map(lambda x: str(x), solution["free_symbols"]))
-    return ("f(" + vars +')' + " = "
-            + smp.latex(solution["smp_function"]))
+    return ("$$f(" + vars +')' + " = "
+            + smp.latex(solution["smp_function"]) + "$$")
 
 
 
@@ -124,7 +124,8 @@ def generate_diagram(solution):
         fig.savefig(buffer, format='png', dpi=70)
 
         # Embed the result into html output
-        solution["figure"] = base64.b64encode(buffer.getbuffer()).decode("ascii")
+        data = base64.b64encode(buffer.getbuffer()).decode("utf-8")
+        solution["figure"] = f"data:image/png;base64,{data}"
         buffer.close()
     except Exception as ex:
         solution["errors"].append(str(ex))

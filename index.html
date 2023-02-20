@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
     <head>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -15,11 +15,20 @@
         <py-env>
             - matplotlib
             - imageio
+            - sympy
+            - paths:
+                - /src/parse_fctn.py
         </py-env>
         <link href="styles.css" rel="stylesheet">
     </head>
     <!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.19.0/full/pyodide.js"></script> -->
-       
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']],
+                             displayMath: [['\\[','\\]'], ['$$','$$']]}});
+    </script>
+    <script type="text/javascript"
+          src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let inp = document.querySelector('input');
@@ -27,12 +36,27 @@
                 var name = document.querySelector('#name');
                 if (inp.value) {
                     name.innerHTML = `Your function: ${inp.value}`;
+                    //document.getElementById("btn").data = inp.value;
                 }
                 else {
                     name.innerHTML = 'Hello, whoever you are';
                 }
             })
         })
+
+        function transformText(text) {  
+            var lf = document.getElementById('latex_function')
+            lf.innerText = text;
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, "latex_function"]);
+        
+        
+        }
+ 
+    </script>
+    <script>
+        function createObject(object, variableName){
+            globalThis[variableName] = object;
+        }
     </script>
     <body>
         <div class="jumbotron jumbotron-fluid">
@@ -42,34 +66,44 @@
         <div class="jumbotron jumbotron-fluid" style="background-color: #fff; color: black">
             <form >
                 <input autocomplete="off" placeholder="Put in a function" type="text" >
+                
             </form>
+            <button type="button" id="btn" onclick="parse()">evaluate!</button>
+            <script type="module">
+            function parse() {
+                
+                let raw_input = document.querySelector('input').value;
+                
+                parse_js(raw_input);
+    
+            }</script>
             <br>
             <p id="name" class="lead"></p>
-            <py-script output="image">
+           
+            <p id="latex_function" class="lead"></p>
+            <div ><img id="img" src="src"/></div>
+            <py-script >
 from pyodide.http import pyfetch
-from js import document
 import asyncio
+import js
+import base64
+from pathlib import Path
 from io import BytesIO
 import matplotlib.pyplot as plt
-import imageio.v3 as iio
-import io, base64
+from pyodide import create_proxy, to_js
+from parse_fctn import parse_function
 
 
-response = await pyfetch(url="https://cataas.com/cat", method="GET")
 
-img = iio.imread(BytesIO(await response.bytes()), index=None)
-plt.imshow(img)
+def process_response(raw_input):
+    sol = parse_function(raw_input)
+    js.document.querySelector("img").setAttribute("src", sol["figure"])
+    js.transformText(sol["latex_description"])
 
-buf = io.BytesIO()
-plt.savefig(buf, format='png')
-buf.seek(0)
-img_str = 'data:image/png;base64,' + base64.b64encode(buf.read()).decode('UTF-8')
-#Here I am setting the value of src of HTML element to that of the image string.
-#pfig = document.getElementById("pyplotfigure")
-#pfig.setAttribute("src",img_str)
+#process_proxy = pyodide.create_proxy(process_response)
+#js.document.getElementById('btn').addEventListener("click", process_proxy)
 
-document.querySelector("pyplotfigure").setAttribute("src", img_str)
-
+js.createObject(create_proxy(process_response), "parse_js")
 
 <!-- imgplot = plt.imshow(img)
 
@@ -128,8 +162,7 @@ imgplot -->
             </script> -->
 
             
-            <p id="latex_function" class="lead"></p>
-            <div id="pyplotdiv"><img id="pyplotfigure" src="src"/></div>
+            
         </div>
 
     </body>
