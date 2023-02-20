@@ -65,8 +65,11 @@ plt.savefig(buf, format='png')
 buf.seek(0)
 img_str = 'data:image/png;base64,' + base64.b64encode(buf.read()).decode('UTF-8')
 #Here I am setting the value of src of HTML element to that of the image string.
-pfig = document.getElementById("pyplotfigure")
-pfig.setAttribute("src",img_str)
+#pfig = document.getElementById("pyplotfigure")
+#pfig.setAttribute("src",img_str)
+
+document.querySelector("pyplotfigure").setAttribute("src", img_str)
+
 
 <!-- imgplot = plt.imshow(img)
 
@@ -126,7 +129,7 @@ imgplot -->
 
             
             <p id="latex_function" class="lead"></p>
-            <div id="pyplotdiv"><img id="pyplotfigure"/></div>
+            <div id="pyplotdiv"><img id="pyplotfigure" src="src"/></div>
         </div>
 
     </body>
