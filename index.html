@@ -9,8 +9,14 @@
         
         <title>Function Visualization</title>
         <meta charset="utf-8">
+        
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+        <py-env>
+            - matplotlib
+            - imageio
+        </py-env>
         <link href="styles.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/pyodide/dev/full/pyodide.js"></script> </head>
     </head>
     <!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.19.0/full/pyodide.js"></script> -->
        
@@ -39,7 +45,35 @@
             </form>
             <br>
             <p id="name" class="lead"></p>
-            <script type="text/javascript">
+            <py-script output="image">
+from pyodide.http import pyfetch
+from js import document
+import asyncio
+from io import BytesIO
+import matplotlib.pyplot as plt
+import imageio.v3 as iio
+import io, base64
+
+
+response = await pyfetch(url="https://cataas.com/cat", method="GET")
+
+img = iio.imread(BytesIO(await response.bytes()), index=None)
+plt.imshow(img)
+
+buf = io.BytesIO()
+plt.savefig(buf, format='png')
+buf.seek(0)
+img_str = 'data:image/png;base64,' + base64.b64encode(buf.read()).decode('UTF-8')
+#Here I am setting the value of src of HTML element to that of the image string.
+pfig = document.getElementById("pyplotfigure")
+pfig.setAttribute("src",img_str)
+
+<!-- imgplot = plt.imshow(img)
+
+imgplot -->
+            </py-script>
+            
+            <!-- <script type="text/javascript">
                 async function main(){
                     let pyodide = await loadPyodide();
                     console.log(
@@ -51,9 +85,9 @@
                     
                    // await pyodide.loadPackage("matplotlib", "sympy", "base64");
                     await pyodide.loadPackage("micropip");
-                   
+                    await pyodide.loadPackage("matplotlib");
                     const micropip = pyodide.pyimport("micropip");
-                    await micropip.install('sympy', 'matplotlib');
+                    await micropip.install('sympy');
                     pyodide.runPython(`
                     import sympy as smp
                     import matplotlib
@@ -88,7 +122,8 @@
                     
                 }
                 main(); 
-            </script>
+            </script> -->
+
             
             <p id="latex_function" class="lead"></p>
             <div id="pyplotdiv"><img id="pyplotfigure"/></div>
