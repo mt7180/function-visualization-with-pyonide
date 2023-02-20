@@ -54,16 +54,16 @@
                     // Fetch parse_fctn.py and save it in browser memory
                     await pyodide.runPythonAsync(`
                         from pyodide.http import pyfetch
-                        response = await pyfetch("src/test.py")
-                        with open("test.py", "wb") as f:
+                        response = await pyfetch("src/parse_fctn.py")
+                        with open("parse_fctn.py", "wb") as f:
                             f.write(await response.bytes())
                     `)
 
 
                     // Importing fetched .py module
-                    let pkg = pyodide.pyimport("test")
-                    const ls = pkg.test();
-                    //const ls = pkg.parse_function("x^3+4");
+                    let pkg = pyodide.pyimport("parse_fctn")
+                    //const ls = pkg.test();
+                    const ls = pkg.parse_function("x^3+4");
                     //pyodide.runPython(await (await fetch("src/parse_ftctn.py")).text());
                     
                     //const ls = pyodide.runPython(`pkg.parse_function("x^3+4")["latex_function"] `);
