@@ -35,7 +35,7 @@
             inp.addEventListener('keyup', function(event) {
                 var name = document.querySelector('#name');
                 if (inp.value) {
-                    name.innerHTML = `Your function: ${inp.value}`;
+                    name.innerHTML = `Your raw input: ${inp.value}`;
                     //document.getElementById("btn").data = inp.value;
                 }
                 else {
@@ -48,8 +48,6 @@
             var lf = document.getElementById('latex_function')
             lf.innerText = text;
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, "latex_function"]);
-        
-        
         }
  
     </script>
@@ -65,23 +63,26 @@
         </div>
         <div class="jumbotron jumbotron-fluid" style="background-color: #fff; color: black">
             <form >
-                <input autocomplete="off" placeholder="Put in a function" type="text" >
+                <input autocomplete="off" placeholder="Type a function" type="text" >
                 
             </form>
+            <br>
             <button type="button" id="btn" onclick="parse()">evaluate!</button>
+            <br>
             <script>
             function parse() {
-                
                 let raw_input = document.querySelector('input').value;
-                
                 parse_js(raw_input);
+                let element = document.getElementById("img");  
+    
+                $('.center').show();
     
             }</script>
             <br>
             <p id="name" class="lead"></p>
            
             <p id="latex_function" class="lead"></p>
-            <div ><img id="img" src="src"/></div>
+            <div ><img id="img" class="center" src="src" /></div>
             <py-script >
 from pyodide.http import pyfetch
 import asyncio
