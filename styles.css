@@ -24,20 +24,33 @@ body {
     padding-right: 5px;
 }
 
-.textbereich{
-    float: right;
-    background-color: #EAEDED;
+.notation{
+    /* float: left; */
+    margin: auto;
+    background-color: white;
     /*padding: 0.5rem 2rem 1rem 2rem;*/
+    /* width: 80%; */
     width: 80%;
-    height: 700px;
+    display: "true";
+    text-align: left;
+    color: grey;
+    
+}
+.notation ul {
+    display: inline-block;
+    margin: 1rem;
+    padding: 0;
+    /* For IE, the outcast */
+    zoom:1;
+    *display: inline;
+}
+.notation li {
+    float: left;
+    line-height: 120%
+
 }
 
-.textbereich2{
-    /*float: right;*/
-    background-color: #EAEDED;
-    padding: 0.5rem 2rem 1rem 2rem;
 
-}
 
 .clearfloat {
     clear: both;
@@ -51,14 +64,7 @@ body {
     width:50%;
     text-align:center;
 }
-.img_round_center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  border-radius: 50%;
-  margin-top:2rem;
-}
+
 footer{
     float:left;
 }
@@ -92,7 +98,7 @@ h1{
 
 .center {
   margin: auto;
-  width: 60%;
+  width: 50%;
   /* border: 1px solid lightgrey; */
   padding: 10px;
   display: none;

@@ -83,6 +83,20 @@
            
             <p id="latex_function" class="lead"></p>
             <div ><img id="img" class="center" src="src" /></div>
+            <br>
+            <br>
+            <div class="notation">
+            <p class="lead">Notation Conventions:</p>
+            <br>
+            <ul style="list-style-type: disc;">
+                <li>You can type any mathematical function that can be given as e.g "x^2" or "f(x)=x^2" and it will be simplified and printed to a diagram.</li>
+                <li>You can enter any mathematical expression that e.g. can be entered into a hand calculator.</li>
+                <li>Use only small letters for function variables.</li>
+                <li>To specify the range of the x-axis, enter **limit[xmin, xmax]** at the end of the function. => "x^2; e^x [-1, 4]"</li>
+                <li>Additionally, you may use Python SymPy syntax for more complex calculations. -> https://docs.sympy.org/latest/tutorial/solvers.html</li>
+                
+            </ul>
+            </div>
             <py-script >
 from pyodide.http import pyfetch
 import asyncio
