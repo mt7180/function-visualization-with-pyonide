@@ -41,7 +41,7 @@ body {
     padding: 0;
     /* For IE, the outcast */
     zoom:1;
-    *display: inline;
+    /*display: inline;*/
 }
 .notation li {
     float: left;
